@@ -1,13 +1,15 @@
+# Custom paths
+import sys
+sys.path.append('/home/david/Documents/Code/BoschHackathon/ImageQualityEvaluation_Bosch')
+from include.orientation import evaluateTopRightCorner
+
 from PIL import Image
 import csv
-
-# Custom implementations
-from ..include import orientation
 
 # Array for storing the results of each image
 results = [[]] # Format -> [orientation, centering, brightness, focus]
 
-
+# Write to a CSV file the evaluation results
 def writeToCsv():
     fields = ['Image', 'Orientation', 'Centering', 'Brightness', 'Focus']
     file = "../Results.csv"
@@ -33,7 +35,8 @@ def main():
         evImg = Image.open(path)
         
         # Evaluation section
-        print(orientation.evaluateTopRightCorner(evImg))
+        for img in fileIndex:
+            print()
         
         # Write results to a csv file
         writeToCsv()

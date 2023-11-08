@@ -22,22 +22,23 @@ def evaluateTopRightCorner(image:Image, maxBrightness:int ) -> bool:
     '''    
     # Determine the relative path to the images
     # path = f"../data/{filename}"
-        
-    # Define the position and size of the kernel
-    y_size = 50
-    x_size = 50
-    
-    # The position is given by the starting point of the image, which is the bottom left corner
-    y_top, y_bottom = 480 - 20, 480 - 20 - y_size
-    x_left, x_right = 515, 515 + x_size
+
+    # Get the dimensions of the image
+    width, height = image.size
+
+    # Define the position and size of the crop
+    crop_width = 50
+    crop_height = 50
+    x_left = width - crop_width - 80
+    x_right = width - 80
+    y_top = 0 + 20
+    y_bottom = crop_height + 20
+
+    # Crop the top right corner
+    selection = image.crop((x_left, y_top, x_right, y_bottom))
     
     # Convert the image to B&B
     image = image.convert('L')
-    
-    # Calculate the mean of the region specified by the position and size of the kernel
-    # Crop to the wanted region
-    selection = image.crop((x_left, y_bottom, x_right, y_top))
-    selection.show()
     
     if selection.width > 0 and selection.height > 0:
         # Calculate the statistics for the selected region
