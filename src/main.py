@@ -28,15 +28,15 @@ def main():
         path = "../data/REF_23.PNG"
         refImg = Image.open(path)
 
-        # Images to evaluate 
-        index = 1
-        imgName = str(index) + ".PNG"
-        path = "../data/" + imgName
-        evImg = Image.open(path)
-        
         # Evaluation section
-        for img in fileIndex:
-            print()
+        for index in range(len(fileIndex)):
+            path = f"../data/{fileIndex[index]}.PNG"
+            evImg = Image.open(path)
+            oriented = evaluateTopRightCorner(evImg, 50)
+            # Append elements to results
+            results.append(list())
+            results[index].append(f"{fileIndex[index]}.PNG")
+            results[index].append(str(oriented))
         
         # Write results to a csv file
         writeToCsv()

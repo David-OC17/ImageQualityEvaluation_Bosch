@@ -43,7 +43,7 @@ def evaluateTopRightCorner(image:Image, maxBrightness:int ) -> bool:
     if selection.width > 0 and selection.height > 0:
         # Calculate the statistics for the selected region
         mean = ImageStat.Stat(selection).mean
-        print("Mean:", mean)
+        #print("Mean:", mean)
     else:
         print("Selected region is empty, cannot calculate the mean.")
 

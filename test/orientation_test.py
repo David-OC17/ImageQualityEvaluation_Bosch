@@ -1,5 +1,7 @@
+from paths import main_path
+
 import sys
-sys.path.append('/home/david/Documents/Code/BoschHackathon/ImageQualityEvaluation_Bosch')
+sys.path.append(main_path)
 
 from include.orientation import evaluateTopRightCorner
 from PIL import Image
