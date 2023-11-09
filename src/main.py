@@ -17,7 +17,7 @@ def main():
 
         # Evaluation section
         for index in fileIndex:
-            results = evaluateAll(str(index))
+            results = evaluateAll(f"{index}.PNG")
 
             # Append elements to results
             centering.append(results[0])
@@ -32,3 +32,4 @@ def main():
         print(ex)
 
 
+main()
