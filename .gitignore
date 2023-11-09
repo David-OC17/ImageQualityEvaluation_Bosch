@@ -1,5 +1,6 @@
 # Ignore paths for absolute module imports
 /test/paths.py
+/app/paths.py
 /src/paths.py
 /test/playground.py
 

@@ -126,8 +126,21 @@ main_path = '/<path_to_repo>/ImageQualityEvaluation_Bosch'
 ## User Interface
 To make this project user friendly, a simple GUI application is provided for its usage and there is also the possiblity of executing the project via Windows Command Prompt / Linux terminal according to the needs of our users. Here it will be included some brief explanations on how to use each one of them. Furthermore, after running the project, a csv file which contains all the evaluation results is created. 
 
+## Run from Terminal
+Use one of the following formats
+
+```bash
+python3 imageEvaluation.py <path_to_images> <filenme>
+```
+
+or
+
+```bash
+python3 imageEvaluation.py <path_to_images>
+```
+
 ### Project App
-<!>Include an <>
+
 
 ### Contribute
 We welcome contributions from the Bosch Hackathon community. If you have ideas for improving the image quality evaluation process or want to contribute code or documentation, please feel free to open an issue or submit a pull request.

@@ -37,3 +37,25 @@ def evaluateAll(testFileNum:str, referenceFile:str='REF_23.PNG', path:str='../da
     results[3] = sharp(testFileNum=testFileNum, path=path)
 
     return results
+
+'''
+
+def evaluate(testFileNum: str) -> list:
+
+    results = [False, False, False, False]
+    referenceFile = 'REF_23'
+
+    # offset to reference (centering) (tolerance +/- 10)
+    results[0] = evaluateCentering(testFileNum, referenceFile, 10)
+
+    # lighting
+    results[1] = evaluateLighting(testFileNum)
+
+    # orientation (50 seems to be a good number for most cases)
+    results[2] = evaluateOrientation(testFileNum, 50)
+
+    # focus (Sharpness of Image)
+    results[3] = sharp(testFileNum)
+
+    return results
+'''

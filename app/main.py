@@ -1,9 +1,13 @@
 # Custom paths
 
-from evaluateAll import evaluate
+import sys
+
+from paths import main_path
+sys.path.append(main_path)
+
+from src.evaluateAll import evaluate
 import pandas as pd
 import streamlit as st
-
 
 @st.cache_data
 def main():
