@@ -2,15 +2,15 @@
 A main function for the app to run on an image, testing it on the 4 categories.
 '''
 
-from paths import main_path
+#from paths import main_path
 import sys
-sys.path.append(main_path)
+#sys.path.append(main_path)
 
-from PIL import Image
 
 from include.centering import evaluateCentering
 from include.orientation import evaluateOrientation
 from include.lighting import evaluateLighting
+from include.focus import sharp
 
 
 def evaluateAll(testFileNum:str) -> list:
@@ -31,7 +31,11 @@ def evaluateAll(testFileNum:str) -> list:
     # orientation (50 seems to be a good number for most cases)
     results[2] = evaluateOrientation(testFileNum, 50)
     
-    # focus (missing, leave false for the moment)
-    #results[3] = evaluateFocus(...)
-    
+    # focus (Sharpness of Image)
+    results[3] = sharp(testFileNum)
+
     return results
+
+
+#print(evaluateAll("1"))
+

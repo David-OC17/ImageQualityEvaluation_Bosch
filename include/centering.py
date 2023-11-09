@@ -26,7 +26,7 @@ def cross_image(im1:np.ndarray, im2:np.ndarray):
 def evaluateCentering(refImageName :str = 'REF_23', testImageName :str = '12', tolerance:int=10) -> bool:
     '''
     Evaluate if the test image is off-center from the reference image, by more than the tolerance permits it to be.
-    If the image is within bounds, returns true (else false). Defualt tolerance is +/- 10 pixels.
+    If the image is within bounds, returns true (else false). Default tolerance is +/- 10 pixels.
     '''
     
     # Load reference and new image
@@ -57,15 +57,15 @@ def evaluateCentering(refImageName :str = 'REF_23', testImageName :str = '12', t
     max_corr_x = max_corr_position[1]
     
     # Calculate the offsets from the center
-    x_offset = max_corr_x - (width / 2)
-    y_offset = max_corr_y - (height / 2)
+    x_offset = (max_corr_x - (width / 2)) * 2
+    y_offset = (max_corr_y - (height / 2)) * 2
 
     # Uncomment to debug
-    print("X Offset (in pixels):", x_offset)
-    print("Y Offset (in pixels):", y_offset)
+    #print("X Offset (in pixels):", x_offset)
+    #print("Y Offset (in pixels):", y_offset)
     
     # Check if the offsets are inside the accepted margins
-    if x_offset > tolerance or y_offset > tolerance:
+    if x_offset < tolerance and y_offset < tolerance:
         return True
     else:
         return False

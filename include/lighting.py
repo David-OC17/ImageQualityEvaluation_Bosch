@@ -1,6 +1,6 @@
 import cv2
 
-def evaluateLighting(testFileNum:int) -> bool:
+def evaluateLighting(testFileNum) -> bool:
     '''
     Receives a paramater 'image' of type Matlike, generated via the use of cv2.imread()
     Returns if the image passed the evaluation as a boolean
@@ -48,12 +48,12 @@ def evaluateLighting(testFileNum:int) -> bool:
     total_blue = 0
     count = 0
 
-    print("/////////////////")
+    #print("/////////////////")
 
     for x in list_light:
         element1 = x[0][0]  # First integer
         element2 = x[0][1]  # Second integer
-        print(f"First element: {element1}, Second element: {element2}")
+        #print(f"First element: {element1}, Second element: {element2}")
 
         if element1 < 235:
             element1 -= 5
@@ -67,7 +67,7 @@ def evaluateLighting(testFileNum:int) -> bool:
         pixel_color = crop_img[element2, element1]
         blue, green, red = pixel_color
 
-        print(f"RGB color of pixel ({element1}, {element2}): ({red}, {green}, {blue})")
+        #print(f"RGB color of pixel ({element1}, {element2}): ({red}, {green}, {blue})")
 
         total_red += red
         total_green += green
@@ -82,11 +82,13 @@ def evaluateLighting(testFileNum:int) -> bool:
 
     color_mean = (mean_red + mean_blue + mean_green) / 3
 
-    print("/////")
-    print(f"Mean RGB color of the specified range: ({mean_red}, {mean_green}, {mean_blue})")
-    print(f"Mean Color : {color_mean}")
+    #print("/////")
+    #print(f"Mean RGB color of the specified range: ({mean_red}, {mean_green}, {mean_blue})")
+    #print(f"Mean Color : {color_mean}")
 
     if 170 <= color_mean <= 230:
-        print("Image with lightning within range")
+        #print("Image with lightning within range")
+        return True
     else:
-        print("Image lightning NOT in range")
+        #print("Image lightning NOT in range")
+        return False

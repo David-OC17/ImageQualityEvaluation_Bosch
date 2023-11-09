@@ -2,17 +2,19 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
-imagen = cv2.imread("../data/REF_23.PNG")
 
+def sharp(testFileNum) -> bool:
 
-def sharp(image):
+    # Assume all data is inside /data/
+    path = f'../data/{testFileNum}.PNG'
+    image = cv2.imread(path)
     # Exact crop 50x50 pixels where change between black and white is noticeable
     crop_img = image[250:300, 370:420]
 
     gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
 
-    cv2.imwrite('image.jpg', crop_img)
-    cv2.imwrite("gray.jpg", gray)
+    #cv2.imwrite('image.jpg', crop_img)
+    #cv2.imwrite("gray.jpg", gray)
 
     # Normalize 2500 pixels in image
     # Get the height and width of the image
@@ -53,10 +55,10 @@ def sharp(image):
 
 
     # Plot the ESF and LSF
-    fig, ax = plt.subplots()
-    ax.plot(x_lsf, normalized_data)
-    ax.plot(x_values, sorted_pixels)
-    plt.show()
+    #fig, ax = plt.subplots()
+    #ax.plot(x_lsf, normalized_data)
+    #ax.plot(x_values, sorted_pixels)
+    #plt.show()
 
     # Make the MTF-50
 
@@ -80,26 +82,26 @@ def sharp(image):
     y_filtered = mtf[freq > 0]
 
 
-    plt.plot(x_filtered, y_filtered)
-    plt.xlabel('Spatial Frequency (cycles per pixel)')
-    plt.ylabel('MTF')
-    plt.title('Modulation Transfer Function (MTF)')
-    plt.grid(True)
-    plt.show()
+    #plt.plot(x_filtered, y_filtered)
+    #plt.xlabel('Spatial Frequency (cycles per pixel)')
+    #plt.ylabel('MTF')
+    #plt.title('Modulation Transfer Function (MTF)')
+    #plt.grid(True)
+    #plt.show()
 
 
     # Find the frequency where MTF drops to 50% (0.5)
     mtf_threshold = 0.5  # MTF at 50%
     cut_off_index = np.where(y_filtered <= mtf_threshold)[0][0]
-    print(cut_off_index)
+    #print(cut_off_index)
 
     # Calculate the cut-off frequency
     cut_off_mtf = y_filtered[cut_off_index]
     cut_off_frequency = x_filtered[cut_off_index]
 
-    print(f"Cut-off MTF: {cut_off_mtf}")
+    #print(f"Cut-off MTF: {cut_off_mtf}")
 
-    print(f"Cut-off Frequency: {cut_off_frequency}")
+    #print(f"Cut-off Frequency: {cut_off_frequency}")
 
     #First index
     # index 8 and value 0.44 for 20
@@ -112,9 +114,9 @@ def sharp(image):
     #index 12 for 19
 
     if cut_off_index > 12:
-        print("Image is Sharp")
+        #print("Image is Sharp")
+        return True
     else:
-        print("Image is not Sharp")
+        #print("Image is not Sharp")
+        return False
 
-
-#sharp(imagen)

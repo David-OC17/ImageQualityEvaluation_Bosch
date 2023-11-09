@@ -1,48 +1,35 @@
 # Custom paths
-import sys
-sys.path.append('/home/david/Documents/Code/BoschHackathon/ImageQualityEvaluation_Bosch')
-from include.orientation import evaluateTopRightCorner
 
-from PIL import Image
-import csv
-
-# Write to a CSV file the evaluation results
-def writeToCsv(results):
-    fields = ['Image', 'Orientation', 'Centering', 'Brightness', 'Focus']
-    file = "../Results.csv"
-    with open(file, 'w') as csvFile:
-        writer = csv.writer(csvFile)
-        writer.writerow(fields)
-        writer.writerows(results)
+from evaluateAll import evaluateAll
+import pandas as pd
 
 
 def main():
     # Array for storing the results of each image
-    results = [[]] # Format -> [orientation, centering, brightness, focus]
+    centering = [] # Format -> [orientation, centering, brightness, focus]
+    lightning = []
+    orientation = []
+    focus = []
     
     try:
         fileIndex = [1, 2, 4, 8, 9, 11, 12, 14, 18, 19, 20, 
-                     21, 22, 24, 26, 27, 28, 29, 32, 36]
-        
-        # Reference image
-        path = "../data/REF_23.PNG"
-        refImg = Image.open(path)
+                     21, 22, 24, 26, 27, 28, 29, 32, 36, "REF_23"]
 
         # Evaluation section
-        for index in range(len(fileIndex)):
-            path = f"../data/{fileIndex[index]}.PNG"
-            evImg = Image.open(path)
-            oriented = evaluateTopRightCorner(evImg, 50)
+        for index in fileIndex:
+            path = f"{index}"
+            results = evaluateAll(path)
+
             # Append elements to results
-            results.append(list())
-            results[index].append(f"{fileIndex[index]}.PNG")
-            results[index].append(str(oriented))
-        
-        # Write results to a csv file
-        writeToCsv()
+            centering.append(results[0])
+            lightning.append(results[1])
+            orientation.append(results[2])
+            focus.append(results[3])
+
+        df = pd.DataFrame({'File_Index': fileIndex, 'Centering': centering, "Lightning": lightning, "Orientation": orientation, "Sharpness": focus})
+        print(df)
 
     except Exception as ex:
         print(ex)
 
-if __name__ == '__main__':
-    main()
+
