@@ -3,7 +3,7 @@
 from evaluateAll import evaluateAll
 import pandas as pd
 
-def getData() ->pd.DataFrame:
+def getData() -> pd.DataFrame:
     # Array for storing the results of each image
     centering = [] # Format -> [orientation, centering, brightness, focus]
     lightning = []

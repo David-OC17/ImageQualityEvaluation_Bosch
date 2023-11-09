@@ -14,14 +14,15 @@ from PIL import Image
 from PIL import ImageStat
 
 # Assume that all images are of size 640 * 480 pixels
-def evaluateOrientation(fileNum:str, maxBrightness:int) -> bool:
+def evaluateOrientation(testFileNum:str, maxBrightness:int, path:str='../data/') -> bool:
     '''
     Checks whether the kernel has a mean lightness below a threshold and returns if it is below it.
+    Receives a path to where the images are.
     Is below the value: true
     Is NOT below the value: false
     '''    
     # Determine the relative path to the images
-    path = f"../data/{fileNum}.PNG"
+    path = f'{path}{testFileNum}'
     image = Image.open(path)
 
     # Get the dimensions of the image

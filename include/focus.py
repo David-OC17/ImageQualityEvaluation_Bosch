@@ -3,10 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def sharp(testFileNum) -> bool:
+def sharp(testFileName:str, path:str='../data/') -> bool:
 
-    # Assume all data is inside /data/
-    path = f'../data/{testFileNum}.PNG'
+    path = f'{path}{testFileName}'
     image = cv2.imread(path)
     # Exact crop 50x50 pixels where change between black and white is noticeable
     crop_img = image[250:300, 370:420]
@@ -82,12 +81,12 @@ def sharp(testFileNum) -> bool:
     y_filtered = mtf[freq > 0]
 
 
-    #plt.plot(x_filtered, y_filtered)
-    #plt.xlabel('Spatial Frequency (cycles per pixel)')
-    #plt.ylabel('MTF')
-    #plt.title('Modulation Transfer Function (MTF)')
-    #plt.grid(True)
-    #plt.show()
+    # plt.plot(x_filtered, y_filtered)
+    # plt.xlabel('Spatial Frequency (cycles per pixel)')
+    # plt.ylabel('MTF')
+    # plt.title('Modulation Transfer Function (MTF)')
+    # plt.grid(True)
+    # plt.show()
 
 
     # Find the frequency where MTF drops to 50% (0.5)

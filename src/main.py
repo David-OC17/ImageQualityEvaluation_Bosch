@@ -17,8 +17,7 @@ def main():
 
         # Evaluation section
         for index in fileIndex:
-            path = f"{index}"
-            results = evaluateAll(path)
+            results = evaluateAll(str(index))
 
             # Append elements to results
             centering.append(results[0])

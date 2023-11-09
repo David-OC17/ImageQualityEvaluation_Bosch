@@ -2,26 +2,21 @@
 ## Introduction
 This repository is dedicated to the evaluation of ADAS (Advanced Driver Assistance Systems) camera images for the Bosch Hackathon. The goal is to assess the quality of the images captured by ADAS cameras and ensure they meet the required standards. All images in this dataset are standardized to be 640 by 480 pixels.
 
-## Quick start
+## Contents
 
-### Installation
-**Prerequisites:**
-Python3
+1. [**Guides**](#guides)
+2. [**Evaluation categories**](#evaluation-categories)
+3. [**Quick Start and**](#quick-start)
+4. [**Quick Start**](#quick-start)
+5. [**Quick Start**](#quick-start)
+6. [**Quick Start**](#quick-start)
 
-1. Clone the repository to your computer.
 
-2. To install the full requirements of the application, use the following command:
-```python
-pip install -r requirements.txt
-```
-3. Create `paths.py` inside `src/` directory. It should contain something like the following:
-```python
-main_path = '/<path_to_repo>/ImageQualityEvaluation_Bosch'
-```  
+## Guides
 
-### Usage
-There are two main ways to use the system, one is by running a script of Python which analyzes all the images inside the data directory and produces a `.csv` file with the results of evaluating all the images in the 4 test. 
+* **Consulta también la carpeta `guides/` para la versión en formato `.pdf` de la guía del usuario, disponible en inglés y español.**
 
+* **Also see `guides/` for the `.pdf` version of the user guide, available in English and Spanish.**
 
 ## Evaluation Categories
 The image evaluation process is divided into four main categories:
@@ -47,20 +42,43 @@ The way in which we asses the centering of an image respect to the reference is 
 Via this method we may determine if the new image is compliant with the tolerances, all comparing to the reference image.
 
 ### 2. Focus
-The focus evaluation checks the sharpness and clarity of the image. It helps determine whether the camera captured a clear and focused image or if blurriness or distortion is present.
+The focus evaluation checks the sharpness and clarity of the image. It helps determine whether the camera captured a clear and focused image or if blurriness or distortion is present. As requested by the specifications, the focus is evaluated in a region of the image in which the center reference square transitions to the white section of the picture. Note that the reference square has an angle in order to be able to analyze the quality of focus of the image at different parts of the image (or the lense itself). To learn more about the reason behind the reference shapes, visit the ISO page for the [ISO-12233:2023](https://www.iso.org/obp/ui/en/#iso:std:iso:12233:ed-4:v1:en) standard and older versions.
+
+The method in which we based our solution is the MTF50 stadard evaluation, as suggested by Bosch. See the following diagram as an explanation of the process:
+<p align="center">
+  <img src="./images/MTF50_explain.png" alt="MTF50 Explanation diagram" width="500">
+</p>
+The process for the analysis is given by the following steps:
+
+1. Read the Image and Convert to Grayscale Format.
+2. 'Project' the intensity of the pixels along one of the edges into a graph, which should look like a sigmoid function. This graph shows the change of intensity of the pixels as we go from the black, reference square section, to the white section.
+4. In order to get a representation of the rate of change of the pixel intensity from the balck to the white area, derive the function given by the projection.
+3. Via a Fast Fourier Transform, decompose the derivative projection.
+4. Plot the `MTF`-like decomposition of the rates of change. 
+
+<p align="center">
+  <img src="./images/MTF50.png" alt="MTF50 " width="600">
+</p>
+
+The graph expresses the spatial frequency, given in cycles per pixel, of the image for that given region. By checking the image when the MTF is at 0.50, it provides the cycles per pixel at a point where the contrast of the image is reduced by 50%.
 
 ### 3. Lighting
 The lighting test measures pixel intensity to assess image brightness, offering a reliable indicator. Test limits range from a minimum of 170 to a maximum of 250. This test evaluates if the lighting in a set of 20 images complies with these limits. Passing signifies meeting standards, while failing suggests deviation. Proper lighting is pivotal for clear and precise image analysis.
+
+<p align="center">
+  <img src="./images/light_comparison.png" alt="MTF50 " width="400">
+</p>
 
 The way in which we asses the lighting of an image respect to the reference is by performing the following operations:
 
 1. Read the Image and Convert to Grayscale Format. 
 2. Apply Binary Thresholding.
 3. Find the Contours of the shape.
-4. Draw Contours on the Original Image.
-5. Collect Contour Data.
-6. Calculate Mean RGB Color.
-7. Evaluate Lighting regarding the calculation. 
+4. Extract the central portion of the object to reduce computational complexity.
+5. Draw Contours on the Original Image.
+6. Collect Contour Data.
+7. Calculate Mean RGB Color.
+8. Evaluate Lighting regarding the calculation. 
 
 By employing this method, we can ascertain whether the new image complies with the established tolerances, all while comparing it to the reference image.
 
@@ -76,19 +94,43 @@ Here are two examples of images being checked via this method:
 
 **Valid orientation**
 <p align="center">
-  <img src="./images/REF_23_evaluateOrientation.PNG" alt="Centering comparison: Reference vs 12" width="400">
+  <img src="./images/REF_23_evaluateOrientation.PNG" alt="Valid orientation" width="400">
 </p>
 
-This image is considered to be valid, as when the top right red region is checked for averag black and white instensity of the channel, it lands below the given threshold. _Note that the threshold may be determined by heuristics
+This image is considered to be valid, as when the top right red region is checked for averag black and white instensity of the channel, it lands below the given threshold. _Note that the threshold may be determined by heuristics, but it may also be adapted for it to consider the center of the image as a basis to determine the threshold, since in case that the image is over or under exposed the threshold should change to acount for the variation._
 
 **Invalid orientation**
 <p align="center">
-  <img src="./images/36._evaluateOrientation.PNG" alt="Centering comparison: Reference vs 12" width="400">
+  <img src="./images/36._evaluateOrientation.PNG" alt="Invalid orientation" width="400">
 </p>
 
+In this second case the image is considered invalid, since the mean of pixel instensity in the specified region would be below the given threshold.
+
+## Quick start
+
+### Installation
+**Prerequisites:**
+Python3
+
+1. Clone the repository to your computer.
+
+2. To install the full requirements of the application, use the following command:
+```python
+pip install -r requirements.txt
+```
+3. Create `paths.py` inside `src/` directory. It should contain something like the following:
+```python
+main_path = '/<path_to_repo>/ImageQualityEvaluation_Bosch'
+```  
+
+## User Interface
+To make this project user friendly, a simple GUI application is provided for its usage and there is also the possiblity of executing the project via Windows Command Prompt / Linux terminal according to the needs of our users. Here it will be included some brief explanations on how to use each one of them. Furthermore, after running the project, a csv file which contains all the evaluation results is created. 
+
+### Project App
+<!>Include an <>
 
 ### Contribute
 We welcome contributions from the Bosch Hackathon community. If you have ideas for improving the image quality evaluation process or want to contribute code or documentation, please feel free to open an issue or submit a pull request.
 
 ### License
-This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms. 
+This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms.      

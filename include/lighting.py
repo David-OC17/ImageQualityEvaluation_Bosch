@@ -1,13 +1,14 @@
 import cv2
 
-def evaluateLighting(testFileNum) -> bool:
+def evaluateLighting(testFileNum:str, path:str='../data/') -> bool:
     '''
-    Receives a paramater 'image' of type Matlike, generated via the use of cv2.imread()
+    Receives a paramater 'image' of type Matlike, generated via the use of cv2.imread().
+    Receives a path to where the images are.
     Returns if the image passed the evaluation as a boolean
     '''
     
     # Assume all data is inside /data/
-    path = f'../data/{testFileNum}.PNG'
+    path = f'{path}{testFileNum}'
     image = cv2.imread(path)
     
     crop_img = image[100:350, 100:500]

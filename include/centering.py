@@ -23,16 +23,17 @@ def cross_image(im1:np.ndarray, im2:np.ndarray):
    # calculate the correlation image; note the flipping of onw of the images
    return scipy.signal.fftconvolve(im1_gray, im2_gray[::-1,::-1], mode='same')
 
-def evaluateCentering(refImageName :str = 'REF_23', testImageName :str = '12', tolerance:int=10) -> bool:
+def evaluateCentering(refImageName :str = 'REF_23.PNG', testImageName :str = '12.PNG', tolerance:int=10, path:str='../data/') -> bool:
     '''
     Evaluate if the test image is off-center from the reference image, by more than the tolerance permits it to be.
+    Receives a path to where the images are.
     If the image is within bounds, returns true (else false). Default tolerance is +/- 10 pixels.
     '''
     
     # Load reference and new image
-    reference_path = f"../data/{refImageName}.PNG"
+    reference_path = f'{path}{testImageName}'
     reference_image = Image.open(reference_path)
-    new_path = f'../data/{testImageName}.PNG'
+    new_path = f'{path}{testImageName}'
     new_image = Image.open(new_path)
     
     width, height = reference_image.size
