@@ -22,7 +22,7 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     norm_pixels = []
     pixels = []
 
-    # Iterate through the grayscale image and print the pixel values
+    # Iterate through all the pixels in the gray image and normalize color value
     for y in range(height):
         for x in range(width):
             pixel_value = gray[y, x]
@@ -31,10 +31,9 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
             pixels.append(pixel_value)
 
 
-    # Plot the ESF
+    # Sort normalized values
     x_values = range(1, len(norm_pixels) + 1)
     sorted_pixels = sorted(norm_pixels)
-
 
     # Diff the ESF to get LSF
     esf_array = np.array(sorted_pixels)

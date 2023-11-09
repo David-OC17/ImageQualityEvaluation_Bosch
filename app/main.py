@@ -1,11 +1,10 @@
 # Custom paths
 
 import sys
-
 from paths import main_path
 sys.path.append(main_path)
 
-from src.evaluateAll import evaluate
+from src.evaluateAll import evaluateAll
 import pandas as pd
 import streamlit as st
 
@@ -19,12 +18,12 @@ def main():
 
     try:
         fileIndex = [1, 2, 4, 8, 9, 11, 12, 14, 18, 19, 20,
-                     21, 22, 24, 26, 27, 28, 29, 32, 36, "REF_23"]
+                     21, 22, 24, 26, 27, 28, 29, 32, 36]
 
         # Evaluation section
         for index in fileIndex:
-            path = f"{index}"
-            results = evaluate(path)
+            file = f"{index}.PNG"
+            results = evaluateAll(file)
 
             # Append elements to results
             centering.append(results[0])
@@ -42,7 +41,7 @@ def main():
 
 
 def unique_img(img):
-    result = evaluate(f"{img}")
+    result = evaluateAll(f"{img}.PNG")
 
     col3.metric(label="Centering : ", value=result[0], delta="")
     col4.metric(label="Lightning : ", value=result[1], delta="")
@@ -67,7 +66,7 @@ with col1:
         img_n = st.select_slider(
             'Select an Image of the Index',
             options=[1, 2, 4, 8, 9, 11, 12, 14, 18, 19, 20,
-                     21, 22, 24, 26, 27, 28, 29, 32, 36, "REF_23"])
+                     21, 22, 24, 26, 27, 28, 29, 32, 36])
         st.subheader(f"Image {img_n}")
 
         unique_img(img_n)
