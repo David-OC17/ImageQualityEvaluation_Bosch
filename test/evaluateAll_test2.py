@@ -1,6 +1,10 @@
 # Custom paths
 
-from evaluateAll import evaluateAll
+from paths import main_path
+import sys
+sys.path.append(main_path)
+
+from src.evaluateAll import evaluateAll
 import pandas as pd
 
 

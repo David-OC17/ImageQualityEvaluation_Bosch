@@ -4,12 +4,22 @@ This repository is dedicated to the evaluation of ADAS (Advanced Driver Assistan
 
 ## Contents
 
-1. [**Guides**](#guides)
-2. [**Evaluation categories**](#evaluation-categories)
-3. [**Quick Start and**](#quick-start)
-4. [**Quick Start**](#quick-start)
-5. [**Quick Start**](#quick-start)
-6. [**Quick Start**](#quick-start)
+<div style="column-count: 2;">
+
+* [**Guides**](#guides)
+
+* [**Evaluation categories**](#evaluation-categories)
+  <br>&nbsp;&nbsp;&nbsp; 1. [Centering](#1-centering)
+  <br>&nbsp;&nbsp;&nbsp; 2. [Focus](#2-focus)
+  <br>&nbsp;&nbsp;&nbsp; 3. [Lighting](#3-lighting)
+  <br>&nbsp;&nbsp;&nbsp; 4. [Orientation](#4-orientation)
+
+* [**Quick Start**](#quick-start)
+  <br>&nbsp;&nbsp;&nbsp; a. [Installation](#installation)
+  <br>&nbsp;&nbsp;&nbsp; b. [User Interface](#user-interface)
+  <br>&nbsp;&nbsp;&nbsp; c. [Run from terminal](#run-from-terminal)
+
+</div>
 
 
 ## Guides
@@ -127,23 +137,35 @@ main_path = '/<path_to_repo>/ImageQualityEvaluation_Bosch'
 To make this project user friendly, a simple GUI application is provided for its usage and there is also the possiblity of executing the project via Windows Command Prompt / Linux terminal according to the needs of our users. Here it will be included some brief explanations on how to use each one of them. Furthermore, after running the project, a csv file which contains all the evaluation results is created. 
 
 ## Run from Terminal
-Use one of the following formats
+Use one of the following formats for calling the evaluation on a directory of images without using the UI:
 
+**Option 1:** Provide the path to the directory of images you want to evaluate, and the name of the reference file.
 ```bash
 python3 imageEvaluation.py <path_to_images> <filenme>
 ```
-
-or
-
+**Option 2:** Only provide the path to the directory and take the reference file as the default of `REF_23.PNG`.
 ```bash
 python3 imageEvaluation.py <path_to_images>
 ```
 
-### Project App
+**Option 3:** Provide no arguments to the programm. Take the default path of `../data/` and the reference image as the default of `REF_23.PNG`.
+```bash
+python3 imageEvaluation.py
+```
 
+Any of these executions produces a `.csv` file that contains the results of the evaluation for all the images, compared to the reference file.
 
 ### Contribute
 We welcome contributions from the Bosch Hackathon community. If you have ideas for improving the image quality evaluation process or want to contribute code or documentation, please feel free to open an issue or submit a pull request.
 
+### Authors
+
+- David Ortiz Cota
+- Jorge Alejandro González Díaz
+- Jose María Soto Valenzuela
+- Pablo Vargas Cárdenas
+
 ### License
-This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms.      
+
+**AWAITING CHANGES**
+This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms. 

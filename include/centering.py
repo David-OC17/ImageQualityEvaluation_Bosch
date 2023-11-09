@@ -25,16 +25,52 @@ def cross_image(im1:np.ndarray, im2:np.ndarray):
 
 def evaluateCentering(refImageName :str = 'REF_23.PNG', testImageName :str = '12.PNG', tolerance:int=10, path:str='../data/') -> bool:
     '''
-    Evaluate if the test image is off-center from the reference image, by more than the tolerance permits it to be.
-    Receives a path to where the images are.
-    If the image is within bounds, returns true (else false). Default tolerance is +/- 10 pixels.
+    Parameters ->   refImageName: name of reference image in format 'filename.PNG'
+                    testImageName: name of image to compare in format 'filename.PNG'
+                    tolerance: number of pixels the image can be off-center to pass (default tolerance is +/- 10 pixels)
+                    path: path to the folder where test and reference images are
+    
+    Returns ->  bool: returns if the image is within the bounds of the tolerance for offset from the center.
+                      true if passes, false if it does not.
+                      
+    The function uses cross-reference to find a point from which to compare, and calculates the deviation from the center for both images.
     '''
     
     # Load reference and new image
-    reference_path = f'{path}{testImageName}'
+    reference_path = f'{path}{refImageName}'
     reference_image = Image.open(reference_path)
+    
     new_path = f'{path}{testImageName}'
     new_image = Image.open(new_path)
+    
+    ###############################################
+    #             Optional operation              #
+    # Crop both images to reduce the comparison   #
+    # area. Try to reduce compute time, and       #
+    # increase accuracy.                          #
+    ###############################################
+        
+    width, height = reference_image.size
+        
+    # Define the position and size of the crop
+    crop_width = 320
+    crop_height = 240
+
+    # Calculate the center coordinates
+    center_x = width // 2
+    center_y = height // 2
+
+    # Calculate the left, right, top, and bottom coordinates for cropping
+    x_left = center_x - crop_width // 2
+    x_right = center_x + crop_width // 2
+    y_top = center_y - crop_height // 2
+    y_bottom = center_y + crop_height // 2
+
+    # Crop the center region
+    reference_image = reference_image.crop((x_left, y_top, x_right, y_bottom))
+    new_image = new_image.crop((x_left, y_top, x_right, y_bottom))
+    
+    ###############################################
     
     width, height = reference_image.size
     
@@ -62,11 +98,15 @@ def evaluateCentering(refImageName :str = 'REF_23.PNG', testImageName :str = '12
     y_offset = (max_corr_y - (height / 2)) * 2
 
     # Uncomment to debug
-    #print("X Offset (in pixels):", x_offset)
-    #print("Y Offset (in pixels):", y_offset)
+    # print("X Offset (in pixels):", x_offset)
+    # print("Y Offset (in pixels):", y_offset)
+    
+    # Add or substract to offsets to account for some error
+    x_offset -= 0.5
+    y_offset -= 0.5
     
     # Check if the offsets are inside the accepted margins
-    if x_offset < tolerance and y_offset < tolerance:
+    if abs(x_offset) < tolerance and abs(y_offset) < tolerance:
         return True
     else:
         return False

@@ -2,9 +2,14 @@ import cv2
 
 def evaluateLighting(testFileNum:str, path:str='../data/') -> bool:
     '''
-    Receives a paramater 'image' of type Matlike, generated via the use of cv2.imread().
-    Receives a path to where the images are.
-    Returns if the image passed the evaluation as a boolean
+    Parameters ->   testFileNum: equivalent to testFileName. Name of image to evaluate in format 'filename.PNG'
+                    path: path to the folder where test and reference images are
+    
+    Returns ->  bool: returns if the image is within the bounds of the tolerance for lighting (range is pixel intensity 170-250).
+                      true if passes, false if it does not.
+                      
+    The function finds the edges of the center reference square and checks the lighting of a square of pixels that surrounds it.
+    The function fails (returns false) if the mean of the analyzed region is outside the accepted range.
     '''
     
     # Assume all data is inside /data/

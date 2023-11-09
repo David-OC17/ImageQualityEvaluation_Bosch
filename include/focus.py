@@ -4,6 +4,17 @@ import numpy as np
 
 
 def sharp(testFileName:str, path:str='../data/') -> bool:
+    '''
+    Parameters -> testFileName - Name of the image to evaluate
+                  path - Absolute path of images directory (if none it is assumed that images are in data relative folder)
+
+    Returns -> bool (indicates whether the image passes the focus test or not)
+
+    This function takes an image as input and firstly it crops a specific sized squared region which contains its center.
+    Then this new image is converted into grayscale and normalized to get raw color data. After this, we use numpy module
+    to obtain the first order differentiation of all the points in the image relative to adyacent pixels. Finally we calculate
+    the Fast Fourier Transform (fft) of the differences 
+    '''
 
     path = f'{path}{testFileName}'
     image = cv2.imread(path)
@@ -35,9 +46,8 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     x_values = range(1, len(norm_pixels) + 1)
     sorted_pixels = sorted(norm_pixels)
 
-    # Diff the ESF to get LSF
+    # Convert into np array to use numpy function to differentiate ESF
     esf_array = np.array(sorted_pixels)
-
     # Calculate the LSF by taking central differences
     lsf = np.diff(esf_array)
 
@@ -51,15 +61,14 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     # Perform Min-Max scaling
     normalized_data = (lsf - min_vals) / (max_vals - min_vals)
 
-
     # Plot the ESF and LSF
     #fig, ax = plt.subplots()
     #ax.plot(x_lsf, normalized_data)
     #ax.plot(x_values, sorted_pixels)
     #plt.show()
 
-    # Make the MTF-50
 
+    # MTF 50
     # Perform the discrete Fourier transform (DFT)
     fft_lsf = np.fft.fft(lsf)
 
@@ -72,7 +81,7 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     # Calculate the corresponding frequency values
     sampling_rate = 2  # Frequency
     n = len(lsf)
-    freq = np.fft.fftfreq(n, d=1.0 / sampling_rate)
+    freq = np.fft.fftfreq(n, d= (1.0 / sampling_rate))
 
 
     # Filter the data to include only points where x > 0
