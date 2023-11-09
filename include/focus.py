@@ -13,7 +13,8 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     This function takes an image as input and firstly it crops a specific sized squared region which contains its center.
     Then this new image is converted into grayscale and normalized to get raw color data. After this, we use numpy module
     to obtain the first order differentiation of all the points in the image relative to adyacent pixels. Finally we calculate
-    the Fast Fourier Transform (fft) of the differences 
+    the Fast Fourier Transform (fft) of the differences, normalize it, and compare it to MTF50 standard to evaluate the image based
+    on its sharpness
     '''
 
     path = f'{path}{testFileName}'
@@ -103,8 +104,8 @@ def sharp(testFileName:str, path:str='../data/') -> bool:
     #print(cut_off_index)
 
     # Calculate the cut-off frequency
-    cut_off_mtf = y_filtered[cut_off_index]
-    cut_off_frequency = x_filtered[cut_off_index]
+    # cut_off_mtf = y_filtered[cut_off_index]
+    # cut_off_frequency = x_filtered[cut_off_index]
 
     #print(f"Cut-off MTF: {cut_off_mtf}")
 

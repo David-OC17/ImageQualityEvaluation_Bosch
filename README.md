@@ -17,8 +17,8 @@ This repository is dedicated to the evaluation of ADAS (Advanced Driver Assistan
 * [**Quick Start**](#quick-start)
   <br>&nbsp;&nbsp;&nbsp; a. [Installation](#installation)
   <br>&nbsp;&nbsp;&nbsp; b. [User Interface](#user-interface)
-  <br>&nbsp;&nbsp;&nbsp; c. [Run from terminal](#run-from-terminal)
-
+  <!--  <br>&nbsp;&nbsp;&nbsp; c. [Run from terminal](#run-from-terminal) -->
+  
 </div>
 
 
@@ -92,6 +92,13 @@ The way in which we asses the lighting of an image respect to the reference is b
 
 By employing this method, we can ascertain whether the new image complies with the established tolerances, all while comparing it to the reference image.
 
+See the following images to further observe the differences between the three versions of the images during the process of evaluating the light exposure. The images show _original_, _black and white_ and _contour_.
+
+<p align="center">
+  <img src="./images/original_light.PNG" alt="Image 1" width="200" height="150">
+  <img src="./images/bb_light.PNG" alt="Image 2" width="200" height="150">
+  <img src="./images/contour.PNG" alt="Image 3" width="200" height="150">
+</p>
 
 ### 4. Orientation
 Orientation is crucial for image interpretation. Images must be in the correct orientation to facilitate accurate analysis. To be considered correctly oriented, an image must adhere to the following guidelines:
@@ -128,14 +135,39 @@ Python3
 ```python
 pip install -r requirements.txt
 ```
-3. Create `paths.py` inside `src/` directory. It should contain something like the following:
+3. Create `paths.py` inside `src/`, `app/` (and `test/` if needed) directories. It should contain something like the following:
 ```python
 main_path = '/<path_to_repo>/ImageQualityEvaluation_Bosch'
 ```  
 
 ## User Interface
-To make this project user friendly, a simple GUI application is provided for its usage and there is also the possiblity of executing the project via Windows Command Prompt / Linux terminal according to the needs of our users. Here it will be included some brief explanations on how to use each one of them. Furthermore, after running the project, a csv file which contains all the evaluation results is created. 
+To make this project user friendly, a simple GUI application is provided for its usage and there is also the possiblity of executing the project via Windows Command Prompt / Linux terminal according to the needs of our users. Here it will be included some brief explanations on how to use each one of them. Furthermore, after running the project, a csv file which contains all the evaluation results is created.
 
+To use the locally run app, download the repository, download the requierements and from `./app/` run the following command:
+```bash
+streamlit run main.py
+```
+
+The app will run in your default browser. Select an option from the dropdown menu:
+<p align="center">
+  <img src="./images/options_menu.png" alt="Options" width="300">
+</p>
+
+**Calculate Quality of all Images**
+
+The app shows a 'matrix'/table of the results of the evaluation. The table shows which of the tests where passed by which image, all comparing to the same reference. The file may also be download via de `download .csv` option, just above the table.
+<p align="center">
+  <img src="./images/option2.png" alt="Option 2" width="300">
+</p>
+
+**Select an Specific Image**
+
+The second option enables the user to select one image at a time, showing the results in a neat format, and displaying the image to the right of the page.
+<p align="center">
+  <img src="./images/option1.png" alt="Option 1" width="300">
+</p>
+
+<!-- 
 ## Run from Terminal
 Use one of the following formats for calling the evaluation on a directory of images without using the UI:
 
@@ -154,6 +186,8 @@ python3 imageEvaluation.py
 ```
 
 Any of these executions produces a `.csv` file that contains the results of the evaluation for all the images, compared to the reference file.
+
+-->
 
 ### Contribute
 We welcome contributions from the Bosch Hackathon community. If you have ideas for improving the image quality evaluation process or want to contribute code or documentation, please feel free to open an issue or submit a pull request.

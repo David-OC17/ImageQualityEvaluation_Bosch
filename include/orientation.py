@@ -16,10 +16,13 @@ from PIL import ImageStat
 # Assume that all images are of size 640 * 480 pixels
 def evaluateOrientation(testFileName:str, maxBrightness:int, path:str='../data/') -> bool:
     '''
-    Checks whether the kernel has a mean lightness below a threshold and returns if it is below it.
-    Receives a path to where the images are.
-    Is below the value: true
-    Is NOT below the value: false
+    Receives -> Path(optional) and name of the image to evaluate
+                maxBrightness - Maximum allowed value for top right dark square testing
+
+    Returns ->  Bool - which indicates wheter the image is correctly oriented or not
+
+    Checks whether the kernel which should contain top right dark square has a mean lightness 
+    below a threshold and returns if it is below it.
     '''    
     # Determine the relative path to the images
     path = f'{path}{testFileName}'
