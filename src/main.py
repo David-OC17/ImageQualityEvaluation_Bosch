@@ -6,11 +6,8 @@ from include.orientation import evaluateTopRightCorner
 from PIL import Image
 import csv
 
-# Array for storing the results of each image
-results = [[]] # Format -> [orientation, centering, brightness, focus]
-
 # Write to a CSV file the evaluation results
-def writeToCsv():
+def writeToCsv(results):
     fields = ['Image', 'Orientation', 'Centering', 'Brightness', 'Focus']
     file = "../Results.csv"
     with open(file, 'w') as csvFile:
@@ -20,6 +17,9 @@ def writeToCsv():
 
 
 def main():
+    # Array for storing the results of each image
+    results = [[]] # Format -> [orientation, centering, brightness, focus]
+    
     try:
         fileIndex = [1, 2, 4, 8, 9, 11, 12, 14, 18, 19, 20, 
                      21, 22, 24, 26, 27, 28, 29, 32, 36]

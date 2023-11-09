@@ -1,5 +1,4 @@
 from paths import main_path
-
 import sys
 sys.path.append(main_path)
 

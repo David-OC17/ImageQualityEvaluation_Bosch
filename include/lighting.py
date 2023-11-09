@@ -1,114 +1,92 @@
 import cv2
-import numpy as np
-from PIL import Image
 
-def find_white_shapes(image_path, output_path):
-    # Open the image
-    image = Image.open(image_path)
+def evaluateLighting(testFileNum:int) -> bool:
+    '''
+    Receives a paramater 'image' of type Matlike, generated via the use of cv2.imread()
+    Returns if the image passed the evaluation as a boolean
+    '''
+    
+    # Assume all data is inside /data/
+    path = f'../data/{testFileNum}.PNG'
+    image = cv2.imread(path)
+    
+    crop_img = image[100:350, 100:500]
 
-    # Convert the image to grayscale
-    image_gray = image.convert('L')
+    #1.Read the Image and convert it to Grayscale Format
+    
+    # convert the image to grayscale format
+    img_gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
 
-    # Convert the grayscale image to a NumPy array
-    image_array = np.array(image_gray)
+    #2. Apply Binary Thresholding
 
-    # Calculate the center coordinates
-    center_x, center_y = image_array.shape[1] // 2, image_array.shape[0] // 2
+    # apply binary thresholding
+    ret, thresh = cv2.threshold(img_gray, 100, 255, cv2.THRESH_BINARY)
 
-    # Define the width and height of the area you want to crop
-    crop_width = 200  # Adjust this value as needed
-    crop_height = 200  # Adjust this value as needed
+    #3. Find the Contours
 
-    # Calculate the coordinates for cropping
-    x1 = center_x - crop_width // 2
-    x2 = center_x + crop_width // 2
-    y1 = center_y - crop_height // 2
-    y2 = center_y + crop_height // 2
+    # detect the contours on the binary image using cv2.CHAIN_APPROX_NONE
+    contours, hierarchy = cv2.findContours(image=thresh, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_SIMPLE)
 
-    # Crop the image to the desired region
-    cropped_image_array = image_array[y1:y2, x1:x2]
 
-    # Apply Canny edge detection to the cropped image
-    edges = cv2.Canny(cropped_image_array, 250, 200)
+    #4.  draw contours on the original image
+    image_copy = crop_img.copy()
+    cv2.drawContours(image=image_copy, contours=contours, contourIdx=-1, color=(0, 255, 0), thickness=1,
+                     lineType=cv2.LINE_AA)
 
-    # Find contours in the binary image
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # see the result
+    #cv2.imwrite('contours_none_image1.jpg', image_copy)
 
-    # Create a three-channel image with white lines
-    white_lines = np.zeros((crop_height, crop_width, 3), dtype=np.uint8)
-    white_lines[edges != 0] = (255, 255, 255)  # White color in BGR format
+    list_light = []
 
-    # Draw the contours on the white_lines image
-    cv2.drawContours(white_lines, contours, -1, (255, 0, 0), 2)
+    for x, y in enumerate(contours[1]):
+        list_light.append(y)
 
-    # Save the image with white contours
-    Image.fromarray(white_lines).save(output_path)
 
-    # Adjust contour coordinates for the cropping
-    for contour in contours:
-        for point in contour:
-            x, y = point[0]
-            # Adjust the coordinates to account for the cropping
-            x += x1
-            y += y1
-            print(f"Contour Coordinate: x={x}, y={y}")
+    # Initialize variables to store the sum of RGB values
+    total_red = 0
+    total_green = 0
+    total_blue = 0
+    count = 0
 
-    return contours
+    print("/////////////////")
 
-# Specify the path to the input image file
-input_image_path = "REF_23.PNG"
+    for x in list_light:
+        element1 = x[0][0]  # First integer
+        element2 = x[0][1]  # Second integer
+        print(f"First element: {element1}, Second element: {element2}")
 
-# Specify the path to the output image with white contours
-output_image_path = "White_Contours_new.png"
+        if element1 < 235:
+            element1 -= 5
+        elif element1 > 235:
+            element1 += 5
+        if element2 < 100:
+            element2 -= 5
+        elif element2 > 100:
+            element2 += 5
 
-# Perform edge detection and find white shapes (contours)
-contours = find_white_shapes(input_image_path, output_image_path)
+        pixel_color = crop_img[element2, element1]
+        blue, green, red = pixel_color
 
-def measure_image_intensity(image_path):
-    # Open the image
-    image = Image.open(image_path)
+        print(f"RGB color of pixel ({element1}, {element2}): ({red}, {green}, {blue})")
 
-    # Convert the image to grayscale
-    image_gray = image.convert('L')
+        total_red += red
+        total_green += green
+        total_blue += blue
+        count += 1
 
-    # Convert the grayscale image to a NumPy array
-    image_array = np.array(image_gray)
 
-    # Find contours in the binary image
-    edges = cv2.Canny(image_array, 250, 200)
-    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # Calculate the mean RGB color
+    mean_red = total_red // count
+    mean_green = total_green // count
+    mean_blue = total_blue // count
 
-    # Find the minimum and maximum X and Y coordinates among all contours
-    min_x = min(contour[:, 0, 0].min() for contour in contours)
-    max_x = max(contour[:, 0, 0].max() for contour in contours)
-    min_y = min(contour[:, 0, 1].min() for contour in contours)
-    max_y = max(contour[:, 0, 1].max() for contour in contours)
+    color_mean = (mean_red + mean_blue + mean_green) / 3
 
-    # Define the region for intensity measurement, moving 5 pixels away from the edge
-    center_x = (min_x + max_x) // 2
-    center_y = (min_y + max_y) // 2
-    region_width = 200  # Adjust this value as needed
-    region_height = 200  # Adjust this value as needed
+    print("/////")
+    print(f"Mean RGB color of the specified range: ({mean_red}, {mean_green}, {mean_blue})")
+    print(f"Mean Color : {color_mean}")
 
-    x1 = max(center_x - region_width // 2, min_x + 5)
-    x2 = min(center_x + region_width // 2, max_x - 5)
-    y1 = max(center_y - region_height // 2, min_y + 5)
-    y2 = min(center_y + region_height // 2, max_y - 5)
-
-    # Crop the image to the defined region
-    cropped_image_array = image_array[y1:y2, x1:x2]
-
-    # Calculate the average intensity in the cropped region
-    average_intensity = np.mean(cropped_image_array)
-
-    return average_intensity
-
-# Specify the path to the input image file
-input_image_path = "REF_23.PNG"
-
-# Perform intensity measurement
-average_intensity = measure_image_intensity(input_image_path)
-
-# Output the result
-print(f"Average Intensity: {average_intensity}")
-
+    if 170 <= color_mean <= 230:
+        print("Image with lightning within range")
+    else:
+        print("Image lightning NOT in range")

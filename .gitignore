@@ -1,5 +1,7 @@
 # Ignore paths for absolute module imports
 /test/paths.py
+/src/paths.py
+/test/playground.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
