@@ -53,10 +53,10 @@ def unique_img(img):
 
 
     with col1:
-        st.markdown(f""":{colors[0]}[Centering : Image must have maximum offset of +- 10 px]""")
-        st.markdown(f""":{colors[1]}[Lightning : Image light must range between 170 and 230 mean range color]""")
-        st.markdown(f""":{colors[2]}[Orientation : Image must be Oriented correctly]""")
-        st.markdown(f""":{colors[3]}[Sharpness : Image must be above MTF50 reference range]""")
+        st.markdown(f"""Centering :  :{colors[0]}[Image must have maximum offset of +- 10 px]""")
+        st.markdown(f"""Lightning : :{colors[1]}[Image light must range between 170 and 230 mean range color]""")
+        st.markdown(f"""Orientation : :{colors[2]}[Image must be Oriented correctly]""")
+        st.markdown(f"""Sharpness : :{colors[3]}[Image must be above MTF50 reference range]""")
 
     col3.metric(label="Centering : ", value=result[0])
     col4.metric(label="Lightning : ", value=result[1], delta="")
