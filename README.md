@@ -5,12 +5,18 @@ This repository is dedicated to the evaluation of ADAS (Advanced Driver Assistan
 ## Evaluation Categories
 The image evaluation process is divided into four main categories:
 
+<<<<<<< Updated upstream
 ### 1. Centering
 This category assesses whether the subject of the image is properly centered. An image is considered centered when the main subject or region of interest is well-aligned within the frame.
+=======
+## Quick start and installation
+
+>>>>>>> Stashed changes
 
 ### 2. Focus
 The focus evaluation checks the sharpness and clarity of the image. It helps determine whether the camera captured a clear and focused image or if blurriness or distortion is present.
 
+<<<<<<< Updated upstream
 ### 3. Lighting
 Lighting is a critical factor in image quality. This category evaluates the brightness and illumination of the image to ensure it meets the desired standards. Proper lighting is essential for clear and accurate analysis.
 
@@ -29,4 +35,33 @@ We welcome contributions from the Bosch Hackathon community. If you have ideas f
 
 ### License
 This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms.
+=======
+Centering refers to the positioning of an image within its frame or field of view. It's a critical aspect of image quality evaluation as defined by ISO standards. Proper centering ensures that the subject of the image is correctly aligned and doesn't appear off-center. This involves evaluating how well an image's main subject or object is positioned relative to the center of the frame.
+
+To evaluate centering according to ISO standards, the image can be compared to a reference image or template. Various image processing techniques can be applied to assess how closely the subject of interest aligns with the center point. This assessment is crucial for applications like photography, computer vision, and quality control in fields such as manufacturing.
+
+To correct centering issues, adjustments may be made by shifting or cropping the image to reposition the subject accurately within the frame.
+
+<p align="center">
+  <img src="./images/comparison23-12_centering.png" alt="Centering comparison: Reference vs 12" width="600">
+</p>
+
+## Focus
+
+Focus in image quality evaluation pertains to the sharpness and clarity of an image. It is a key aspect assessed using standards such as ISO 12233. Focus evaluation involves determining how well-defined the subject or object in an image appears. A focused image should exhibit crisp and clear details, while an out-of-focus image may appear blurry or lack sharpness.
+
+To evaluate focus, ISO 12233 provides a standardized test pattern that can be used to measure the sharpness of an image. This involves analyzing how well-defined certain elements in the image are, often using metrics like the Modulation Transfer Function (MTF).
+
+For correction, if an image is found to be out of focus, techniques such as image sharpening may be employed to enhance the clarity of the subject.
+
+## Lighting
+
+Lighting, also known as brightness, plays a significant role in image quality assessment. Proper lighting ensures that an image is adequately illuminated, allowing for clear and accurate visibility of the subject. ISO standards address the evaluation of brightness, ensuring that images are neither underexposed (too dark) nor overexposed (too bright).
+
+To evaluate lighting, ISO standards may specify methods for measuring the luminance or intensity of light in an image. This involves assessing whether the image's brightness falls within the acceptable range.
+
+For correction, adjustments to the exposure settings during image capture or post-processing techniques can be applied to achieve the desired level of lighting. Balancing lighting is crucial for applications ranging from photography to medical imaging.
+
+These aspects—centering, focus, and lighting—constitute key components of image quality evaluation, ensuring that images are visually clear, properly aligned, and appropriately illuminated for their intended purpose. Adhering to ISO standards for these parameters can lead to improved image quality in various fields.
+>>>>>>> Stashed changes
 
