@@ -98,8 +98,10 @@ def evaluateCentering(refImageName :str = 'REF_23.PNG', testImageName :str = '12
     y_offset = (max_corr_y - (height / 2)) * 2
 
     # Uncomment to debug
-    # print("X Offset (in pixels):", x_offset)
-    # print("Y Offset (in pixels):", y_offset)
+    print(testImageName)
+    print("X Offset (in pixels):", x_offset)
+    print("Y Offset (in pixels):", y_offset)
+    print("\n\n")
     
     # Add or substract to offsets to account for some error
     x_offset -= 0.5

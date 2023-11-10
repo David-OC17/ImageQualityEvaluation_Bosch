@@ -85,6 +85,13 @@ def evaluateLighting(testFileNum:str, path:str='../data/') -> bool:
     mean_red = total_red // count
     mean_green = total_green // count
     mean_blue = total_blue // count
+    
+    # print(testFileNum)
+    # print(f"blue: {mean_blue}")
+    # print(f"green: {mean_green}")
+    # print(f"red: {mean_red}")
+    # print("\n\n")
+    
 
     color_mean = (mean_red + mean_blue + mean_green) / 3
 
