@@ -199,7 +199,6 @@ We welcome contributions from the Bosch Hackathon community. If you have ideas f
 - Jose María Soto Valenzuela
 - Pablo Vargas Cárdenas
 
-### License
+## License
 
-**AWAITING CHANGES**
-This project is licensed under the MIT License, which means you are free to use and modify the code as long as you comply with the license terms. 
+This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0) - see the [LICENSE](LICENSE) file for details. The LGPL-3.0 is a permissive open-source license that allows you to use, modify, and distribute the software, whether in its original form or with modifications. However, any changes made to the original codebase must be released under the same LGPL-3.0 license. For more information about the license, please visit [https://opensource.org/licenses/LGPL-3.0](https://opensource.org/licenses/LGPL-3.0).
